@@ -33,7 +33,8 @@ In conclusion, NoteChad is not just a To-Do List app, but a comprehensive note-t
 that showcases my proficiency in Android development. I'm confident that this project 
 demonstrates my ability to deliver robust and user-friendly applications while adhering to 
 industry best practices.
+
 **Contact Details:**
+
 Name : Arsh Kumar
 Email : arshkum18@gmail.com
----
