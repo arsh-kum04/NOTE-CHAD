@@ -1,16 +1,4 @@
 
-
-**IMPORTANT**
-
-I want to begin by expressing my gratitude for the opportunity to showcase my skills 
-through this assignment. While the task was to develop a basic To-Do List app, 
-I took the liberty to leverage an existing project I've been working on, called NoteChad. 
-NoteChad is a comprehensive note-taking application that encompasses all the functionalities 
-of a To-Do List app and more. I believe this demonstrates my commitment to continually improving
-my skills and delivering high-quality solutions.
-
----
-
 **NoteChad: A Comprehensive Note-Taking App**
 
 **Objective:**
