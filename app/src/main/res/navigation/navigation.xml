@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/fragment_sign_in" >
+
+    <fragment
+        android:id="@+id/fragment_sign_in"
+        android:name="com.example.note_chad.SignInFragment"
+        android:label="signin"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_fragment_sign_in_to_fragment_notes_r_v2"
+            app:destination="@id/fragment_notes_r_v" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_notes_r_v"
+        android:name="com.example.note_chad.NotesRVFragment"
+        android:label="rv"
+        tools:layout="@layout/fragment_notes_r_v" >
+        <action
+            android:id="@+id/action_fragment_notes_r_v_to_fragment_notes"
+            app:destination="@id/fragment_notes" />
+        <!-- Corrected action destination -->
+        <action
+            android:id="@+id/action_fragment_notes_r_v_to_noteUpdateFragment"
+            app:destination="@id/noteUpdateFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_notes"
+        android:name="com.example.note_chad.NotesFragment"
+        android:label="notes"
+        tools:layout="@layout/fragment_notes" />
+
+    <fragment
+        android:id="@+id/noteUpdateFragment"
+        android:name="com.example.note_chad.UpdateNoteFragment"
+        android:label="fragment_note_update"
+        tools:layout="@layout/fragment_update_note" >
+        <action
+            android:id="@+id/action_noteUpdateFragment_to_fragment_notes_r_v"
+            app:destination="@id/fragment_notes_r_v" />
+    </fragment>
+
+</navigation>

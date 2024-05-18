@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".NotesFragment"
+    android:background="@color/black">
+
+    <Toolbar
+        android:id="@+id/note_toolbar"
+        style="@style/Widget.AppCompat.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:navigationIcon="@drawable/baseline_arrow_back_ios_24">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:id="@+id/add_note_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="153dp"
+                android:text="ADD NOTE"
+                android:textSize="24dp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/notesaveIv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/save_button" />
+
+        </LinearLayout>
+    </Toolbar>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/title_tv"
+        android:hint="Enter the title"
+        android:textColorHint="@color/white"
+        android:padding="12dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_below="@id/note_toolbar"
+        android:background="@drawable/blue_border"
+        android:maxLines="1"/>
+    <TextView
+        android:id="@+id/note_timing_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAT 12:03"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="10dp"
+        android:layout_below="@id/title_tv"
+        android:layout_marginStart="13dp"
+        />
+    <EditText
+        android:id="@+id/contentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Enter the description"
+        android:textColorHint="@color/white"
+        android:gravity="top"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/blue_border"
+        android:layout_below="@id/title_tv"
+        android:layout_marginTop="12dp" />
+
+</RelativeLayout>
