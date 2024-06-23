@@ -1,6 +1,8 @@
 
 **NoteChad: A Comprehensive Note-Taking App**
+
 **DEMO : https://drive.google.com/file/d/1tPjRwEiR0lg7IMUhsFxkk5llIuviPWRZ/view?usp=sharing**
+
 **Objective:**
 
 The objective of this project was to create a robust note-taking application 
