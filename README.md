@@ -1,17 +1,7 @@
 
-
-**IMPORTANT**
-
-I want to begin by expressing my gratitude for the opportunity to showcase my skills 
-through this assignment. While the task was to develop a basic To-Do List app, 
-I took the liberty to leverage an existing project I've been working on, called NoteChad. 
-NoteChad is a comprehensive note-taking application that encompasses all the functionalities 
-of a To-Do List app and more. I believe this demonstrates my commitment to continually improving
-my skills and delivering high-quality solutions.
-
----
-
 **NoteChad: A Comprehensive Note-Taking App**
+
+**DEMO : https://drive.google.com/file/d/1tPjRwEiR0lg7IMUhsFxkk5llIuviPWRZ/view?usp=sharing**
 
 **Objective:**
 
@@ -45,7 +35,9 @@ In conclusion, NoteChad is not just a To-Do List app, but a comprehensive note-t
 that showcases my proficiency in Android development. I'm confident that this project 
 demonstrates my ability to deliver robust and user-friendly applications while adhering to 
 industry best practices.
+
 **Contact Details:**
+
 Name : Arsh Kumar
+
 Email : arshkum18@gmail.com
----
