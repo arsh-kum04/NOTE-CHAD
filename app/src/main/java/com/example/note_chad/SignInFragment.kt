@@ -7,18 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.note_chad.databinding.FragmentSignInBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.example.note_chad.viewmodel.AuthViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn.getClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn.getSignedInAccountFromIntent
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
-    private lateinit var auth: FirebaseAuth
+    private val authViewModel: AuthViewModel by viewModels()
 
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -28,14 +33,31 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Toast.makeText(requireContext(),"oncreateview is called",Toast.LENGTH_SHORT).show()
         _binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        auth = FirebaseAuth.getInstance()
-        binding.signinBtn.setOnClickListener {
+
+//        val currentUser=authViewModel.getCurrentUser()
+//        if(currentUser!=null){
+//            Toast.makeText(requireContext(), "Welcome ,${currentUser.displayName} ( ˃ ᵕ ˂ )", Toast.LENGTH_SHORT).show()
+//            findNavController().navigate(R.id.action_fragment_sign_in_to_fragment_notes_r_v2)
+//        }
+        authViewModel.authState.observe(viewLifecycleOwner, Observer {
+            result->
+            result.onSuccess {
+
+                findNavController().navigate(R.id.action_fragment_sign_in_to_fragment_notes_r_v2)
+            }
+            result.onFailure {
+                exception ->  Toast.makeText(requireContext(),
+                "Authentication failed: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+            })
+        binding.signinBtn.setOnClickListener{
             signIn()
         }
     }
@@ -46,7 +68,7 @@ class SignInFragment : Fragment() {
             .requestEmail()
             .build()
 
-        val googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+        val googleSignInClient = getClient(requireContext(), gso)
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -55,33 +77,22 @@ class SignInFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val task = getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account.idToken!!)
+               account?.idToken?.let { idToken->
+                   authViewModel.signInWithGoogle(idToken)
+               }
             } catch (e: ApiException) {
                 Toast.makeText(requireContext(), "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    Toast.makeText(requireContext(), "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
-                    // Navigate to NotesRVFragment upon successful sign-in
-                    findNavController().navigate(R.id.action_fragment_sign_in_to_fragment_notes_r_v2)
-                } else {
-                    Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        authViewModel.signOut()
         _binding = null
     }
 }

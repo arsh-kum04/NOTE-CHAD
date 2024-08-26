@@ -1,7 +1,5 @@
-package Adapter
+package com.example.note_chad.Adapter
 
-import DB.Note
-import DB.NotesDBHelper
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +12,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.note_chad.R
+import com.example.note_chad.roomdb.NotesEntity
 
-class NotesAdapter(private var notes: List<Note>, private val listener: FragmentActivity) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
-    private var db:NotesDBHelper= NotesDBHelper(listener)
+class NotesAdapter(
+    private var notes: List<NotesEntity>,
+    private val listener: FragmentActivity,
+    private val deleteNote:(NotesEntity)->Unit
+    ) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>()
+{
+
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextview)
         val contentTextView: TextView = itemView.findViewById(R.id.contentTextView)
@@ -39,22 +43,19 @@ class NotesAdapter(private var notes: List<Note>, private val listener: Fragment
         holder.updateNote.setOnClickListener {
             val actionId = R.id.action_fragment_notes_r_v_to_noteUpdateFragment
             val bundle = Bundle().apply {
-                putInt("note_id", note.id)
+                putInt("id", note.id)
             }
             listener.findNavController(R.id.nav_host_fragment).navigate(actionId, bundle)
         }
         holder.deleteButton.setOnClickListener{
-            db.deleteNote(note.id)
-            refreshData(db.getAllNotes())
+            deleteNote(note)
             Toast.makeText(listener,"Note Successfully Deleted",Toast.LENGTH_SHORT).show()
 
         }
     }
 
-    fun refreshData(newNote: List<Note>?) {
-        if (newNote != null) {
-            notes = newNote
+    fun submitList(newNote: List<NotesEntity>) {
+            this.notes = newNote
             notifyDataSetChanged()
-        }
     }
 }
